@@ -41,7 +41,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
       id: '1',
       name: 'John Doe',
       email,
-      role: email.includes('admin') ? 'admin' : email.includes('faculty') ? 'faculty' : 'student',
+      role: email.includes('admin') ? 'admin' : 'student',
       department: 'Computer Science',
       semester: 6,
       xp: 1250,

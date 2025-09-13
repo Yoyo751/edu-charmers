@@ -101,7 +101,7 @@ export const Portfolio: React.FC = () => {
       name: 'Academic',
       description: 'Traditional layout ideal for educational institutions',
       color: 'bg-gradient-accent',
-      character: 'faculty' as const,
+      character: 'admin' as const,
     },
     {
       id: 'creative' as const,

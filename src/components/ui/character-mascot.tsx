@@ -1,11 +1,10 @@
 import React from 'react';
 import { cn } from '@/lib/utils';
 import studentCharacter from '@/assets/student-character.jpg';
-import facultyCharacter from '@/assets/faculty-character.jpg';
 import adminCharacter from '@/assets/admin-character.jpg';
 
 interface CharacterMascotProps {
-  type: 'student' | 'faculty' | 'admin';
+  type: 'student' | 'admin';
   size?: 'sm' | 'md' | 'lg';
   animation?: 'float' | 'bounce' | 'celebrate' | 'none';
   className?: string;
@@ -14,7 +13,6 @@ interface CharacterMascotProps {
 
 const characterImages = {
   student: studentCharacter,
-  faculty: facultyCharacter,
   admin: adminCharacter,
 };
 

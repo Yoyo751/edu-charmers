@@ -69,7 +69,6 @@ export const Dashboard: React.FC = () => {
           { icon: <Trophy className="w-6 h-6" />, title: 'Achievements', description: 'View your badges', action: () => navigate('/achievements'), color: 'bg-gradient-creative' },
           { icon: <TrendingUp className="w-6 h-6" />, title: 'Progress', description: 'Track your growth', action: () => navigate('/progress'), color: 'bg-gradient-secondary' },
         ];
-      case 'faculty':
         return [
           { icon: <CheckCircle className="w-6 h-6" />, title: 'Approvals', description: 'Review pending activities', action: () => navigate('/approvals'), color: 'bg-gradient-primary' },
           { icon: <Users className="w-6 h-6" />, title: 'Students', description: 'Manage mentees', action: () => navigate('/students'), color: 'bg-gradient-accent' },
@@ -226,7 +225,7 @@ export const Dashboard: React.FC = () => {
               </>
             )}
 
-            {user.role === 'faculty' && (
+            {user.role === 'admin' && (
               <Card className="card-game">
                 <div className="p-6 space-y-4">
                   <h3 className="text-xl font-semibold text-foreground flex items-center gap-2">
@@ -272,7 +271,7 @@ export const Dashboard: React.FC = () => {
                     </div>
                     <div className="text-center p-4 rounded-lg bg-accent/10">
                       <div className="text-2xl font-bold text-accent">89</div>
-                      <div className="text-sm text-muted-foreground">Faculty Members</div>
+                      <div className="text-sm text-muted-foreground">Administrators</div>
                     </div>
                     <div className="text-center p-4 rounded-lg bg-creative/10">
                       <div className="text-2xl font-bold text-creative">94%</div>
@@ -315,7 +314,6 @@ export const Dashboard: React.FC = () => {
                   <h4 className="font-semibold text-foreground mb-2">Daily Motivation</h4>
                   <p className="text-sm text-muted-foreground">
                     {user.role === 'student' && "Every skill you learn and every challenge you tackle brings you closer to your dreams! Keep pushing forward! 🚀"}
-                    {user.role === 'faculty' && "Your guidance shapes the future leaders of tomorrow. Every student you mentor makes a difference! 🌟"}
                     {user.role === 'admin' && "Your leadership drives institutional excellence. Every decision you make impacts countless futures! 💫"}
                   </p>
                 </div>

@@ -1,9 +1,10 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { CharacterMascot } from '@/components/ui/character-mascot';
 import { Card } from '@/components/ui/card';
 import { Header } from '@/components/layout/Header';
+import { Onboarding } from '@/components/Onboarding';
 import heroBanner from '@/assets/hero-banner.jpg';
 import { 
   GraduationCap, 
@@ -15,11 +16,30 @@ import {
   ArrowRight,
   Star,
   Award,
-  TrendingUp
+  TrendingUp,
+  Smartphone,
+  Download
 } from 'lucide-react';
 
 export const Landing: React.FC = () => {
   const navigate = useNavigate();
+  const [showOnboarding, setShowOnboarding] = useState(false);
+  
+  useEffect(() => {
+    const hasSeenOnboarding = localStorage.getItem('hasSeenOnboarding');
+    if (!hasSeenOnboarding) {
+      setShowOnboarding(true);
+    }
+  }, []);
+
+  const handleOnboardingComplete = () => {
+    localStorage.setItem('hasSeenOnboarding', 'true');
+    setShowOnboarding(false);
+  };
+
+  if (showOnboarding) {
+    return <Onboarding onComplete={handleOnboardingComplete} />;
+  }
 
   const features = [
     {
@@ -39,12 +59,6 @@ export const Landing: React.FC = () => {
       description: 'Generate beautiful portfolios automatically from your activities',
       icon: <Star className="w-6 h-6" />,
       character: 'student' as const,
-    },
-    {
-      title: 'Faculty Approval',
-      description: 'Streamlined approval workflow for faculty members',
-      icon: <Award className="w-6 h-6" />,
-      character: 'faculty' as const,
     },
     {
       title: 'Analytics Dashboard',
@@ -69,13 +83,6 @@ export const Landing: React.FC = () => {
       action: 'Start Your Journey',
     },
     {
-      type: 'Faculty',
-      role: 'faculty' as const,
-      description: 'Guide students, approve activities, and monitor academic progress',
-      benefits: ['Student Mentoring', 'Quick Approvals', 'Progress Analytics', 'Bulk Operations'],
-      action: 'Join as Faculty',
-    },
-    {
       type: 'Administrator',
       role: 'admin' as const,
       description: 'Manage institution-wide analytics and compliance reporting',
@@ -86,12 +93,75 @@ export const Landing: React.FC = () => {
 
   return (
     <div className="min-h-screen bg-background">
-      <Header />
+      {/* Mobile App Header */}
+      <div className="sticky top-0 z-50 bg-background/95 backdrop-blur-sm border-b px-4 py-3 md:hidden">
+        <div className="flex items-center justify-between">
+          <div className="flex items-center gap-2">
+            <CharacterMascot type="student" size="sm" animation="float" />
+            <span className="font-bold text-lg">Student Hub</span>
+          </div>
+          <Button size="sm" onClick={() => setShowOnboarding(true)}>
+            Tour
+          </Button>
+        </div>
+      </div>
+
+      {/* Desktop Header */}
+      <div className="hidden md:block">
+        <Header />
+      </div>
       
-      {/* Hero Section */}
-      <section className="relative py-20 bg-gradient-hero overflow-hidden">
-        <div className="container mx-auto px-4">
-          <div className="grid lg:grid-cols-2 gap-12 items-center">
+      {/* Hero Section - App Style */}
+      <section className="relative bg-gradient-hero overflow-hidden">
+        <div className="container mx-auto px-4 py-8 md:py-20">
+          {/* Mobile App Layout */}
+          <div className="md:hidden text-center text-white space-y-6">
+            <div className="relative w-32 h-32 mx-auto mb-6">
+              <CharacterMascot type="student" size="lg" animation="celebrate" className="w-full h-full" />
+              <div className="absolute -top-2 -right-2">
+                <span className="xp-badge text-xs">Level Up!</span>
+              </div>
+            </div>
+            
+            <h1 className="text-3xl font-bold leading-tight">
+              Student Hub
+            </h1>
+            
+            <p className="text-lg text-white/90 leading-relaxed px-4">
+              Track activities, earn XP, and build your academic portfolio in this gamified learning app.
+            </p>
+            
+            <div className="space-y-3 pt-4">
+              <Button 
+                className="w-full btn-hero py-4 text-lg"
+                onClick={() => navigate('/register')}
+              >
+                <Download className="mr-2 w-5 h-5" />
+                Get Started Free
+              </Button>
+              <Button 
+                variant="outline" 
+                className="w-full text-white border-white/20 hover:bg-white/10 py-3"
+                onClick={() => navigate('/login')}
+              >
+                Already have an account?
+              </Button>
+            </div>
+            
+            <div className="flex justify-center items-center gap-4 pt-4 text-white/80 text-sm">
+              <div className="flex items-center gap-1">
+                <Smartphone className="w-4 h-4" />
+                <span>Mobile App</span>
+              </div>
+              <div className="flex items-center gap-1">
+                <Zap className="w-4 h-4" />
+                <span>100% Free</span>
+              </div>
+            </div>
+          </div>
+
+          {/* Desktop Layout */}
+          <div className="hidden md:grid lg:grid-cols-2 gap-12 items-center">
             <div className="text-white space-y-6">
               <div className="flex items-center gap-3 mb-4">
                 <CharacterMascot type="student" size="md" animation="celebrate" />
@@ -104,8 +174,7 @@ export const Landing: React.FC = () => {
               
               <p className="text-xl text-white/90 leading-relaxed">
                 Transform your academic journey into an engaging adventure. Track activities, 
-                earn achievements, and build impressive portfolios with our gamified platform 
-                designed for Higher Education Institutions in Jammu & Kashmir.
+                earn achievements, and build impressive portfolios with our gamified platform.
               </p>
               
               <div className="flex flex-col sm:flex-row gap-4 pt-4">
@@ -147,7 +216,7 @@ export const Landing: React.FC = () => {
                 alt="Smart Student Hub Hero" 
                 className="rounded-2xl shadow-2xl"
               />
-              <div className="absolute -top-4 -right-4 character-celebrate">
+              <div className="absolute -top-4 -right-4">
                 <CharacterMascot type="student" size="lg" animation="celebrate" />
               </div>
             </div>
@@ -155,49 +224,51 @@ export const Landing: React.FC = () => {
         </div>
       </section>
 
-      {/* User Type Selection */}
-      <section className="py-20 bg-muted">
+      {/* User Type Selection - App Style */}
+      <section className="py-8 md:py-20 bg-muted">
         <div className="container mx-auto px-4">
-          <div className="text-center mb-12">
-            <h2 className="text-4xl font-bold text-foreground mb-4">
+          <div className="text-center mb-8 md:mb-12">
+            <h2 className="text-2xl md:text-4xl font-bold text-foreground mb-2 md:mb-4">
               Choose Your Role
             </h2>
-            <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
-              Join thousands of users already transforming their educational experience
+            <p className="text-lg md:text-xl text-muted-foreground max-w-2xl mx-auto">
+              Join thousands transforming their educational experience
             </p>
           </div>
           
-          <div className="grid md:grid-cols-3 gap-8">
+          <div className="grid gap-4 md:gap-8 md:grid-cols-2 max-w-2xl mx-auto">
             {userTypes.map((userType) => (
-              <Card key={userType.type} className="card-game hover:scale-105 transition-transform cursor-pointer">
-                <div className="text-center space-y-6">
-                  <CharacterMascot 
-                    type={userType.role} 
-                    size="lg" 
-                    animation="float" 
-                    className="mx-auto"
-                  />
+              <Card key={userType.type} className="card-game hover:scale-105 transition-transform cursor-pointer p-6">
+                <div className="text-center space-y-4">
+                  <div className="relative">
+                    <CharacterMascot 
+                      type={userType.role} 
+                      size="lg" 
+                      animation="float" 
+                      className="mx-auto"
+                    />
+                  </div>
                   
                   <div>
-                    <h3 className="text-2xl font-bold text-foreground mb-2">
+                    <h3 className="text-xl md:text-2xl font-bold text-foreground mb-2">
                       {userType.type}
                     </h3>
-                    <p className="text-muted-foreground mb-4">
+                    <p className="text-muted-foreground text-sm md:text-base mb-4">
                       {userType.description}
                     </p>
                   </div>
                   
                   <ul className="space-y-2 text-sm">
                     {userType.benefits.map((benefit) => (
-                      <li key={benefit} className="flex items-center gap-2">
-                        <div className="w-2 h-2 bg-primary rounded-full" />
+                      <li key={benefit} className="flex items-center gap-2 justify-center md:justify-start">
+                        <div className="w-2 h-2 bg-primary rounded-full flex-shrink-0" />
                         <span>{benefit}</span>
                       </li>
                     ))}
                   </ul>
                   
                   <Button 
-                    className="btn-primary w-full"
+                    className="btn-primary w-full mt-4"
                     onClick={() => navigate('/register', { state: { role: userType.role } })}
                   >
                     {userType.action}
@@ -257,7 +328,6 @@ export const Landing: React.FC = () => {
           <div className="max-w-3xl mx-auto space-y-6">
             <div className="flex justify-center gap-4 mb-6">
               <CharacterMascot type="student" animation="celebrate" />
-              <CharacterMascot type="faculty" animation="bounce" />
               <CharacterMascot type="admin" animation="float" />
             </div>
             

@@ -109,7 +109,7 @@ export const Register: React.FC = () => {
       await register({
         name: formData.name,
         email: formData.email,
-        role: formData.role as 'student' | 'faculty' | 'admin',
+        role: formData.role as 'student' | 'admin',
         department: formData.department,
         semester: formData.role === 'student' ? parseInt(formData.semester) : undefined,
       });
@@ -132,7 +132,6 @@ export const Register: React.FC = () => {
 
   const roleCharacterMap = {
     student: 'student' as const,
-    faculty: 'faculty' as const,
     admin: 'admin' as const,
   };
 
@@ -271,7 +270,6 @@ export const Register: React.FC = () => {
                     </SelectTrigger>
                     <SelectContent>
                       <SelectItem value="student">Student</SelectItem>
-                      <SelectItem value="faculty">Faculty</SelectItem>
                       <SelectItem value="admin">Administrator</SelectItem>
                     </SelectContent>
                   </Select>

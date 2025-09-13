@@ -49,7 +49,6 @@ export const Login: React.FC = () => {
 
   const quickLoginOptions = [
     { role: 'student', email: 'student@example.com', label: 'Student Demo' },
-    { role: 'faculty', email: 'faculty@example.com', label: 'Faculty Demo' },
     { role: 'admin', email: 'admin@example.com', label: 'Admin Demo' },
   ];
 
@@ -176,7 +175,7 @@ export const Login: React.FC = () => {
         {/* Character Motivation */}
         <div className="text-center">
           <div className="flex justify-center mb-2">
-            <CharacterMascot type="faculty" size="sm" animation="bounce" />
+            <CharacterMascot type="student" size="sm" animation="bounce" />
           </div>
           <p className="text-white/80 text-sm">
             "Every expert was once a beginner. Start your journey today!"
